@@ -1,3 +1,6 @@
+"use client";
+
+import { login } from "@/lib/auth-actions";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +22,9 @@ export default function Navbar() {
             Globe
           </Link>
 
-          <button className="flex items-center justify-center text-white bg-gray-800 hover:bg-gray-900 p-2 rounded-sm cursor-pointer">
+          <button
+            className="flex items-center justify-center text-white bg-gray-800 hover:bg-gray-900 p-2 rounded-sm cursor-pointer"
+            onClick={login}>
             Sign In
             <svg
               className="w-6 h-6 ml-2"
