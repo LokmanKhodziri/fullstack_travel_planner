@@ -74,3 +74,38 @@ DATABASE_URL=postgresql://...
 Remove `psql '` from the start and the closing `'` at the end. Only the URL string should be present.
 
 If you follow these steps, the above errors should be resolved. For further issues, check your environment variables, import paths, and component props for correctness.
+
+---
+
+### Prisma Model Property Undefined (e.g. `prisma.trip` is undefined)
+
+**Error:**
+
+```
+TypeError: Cannot read properties of undefined (reading 'create')
+```
+
+Or:
+
+```
+Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+```
+
+**Cause:**
+
+- Using a custom Prisma client output path in `schema.prisma` (e.g. `output = "../app/generated/prisma"`).
+- Importing `PrismaClient` from the wrong path, or not restarting the server after generating the client.
+
+**How I solved it:**
+
+1. Made sure to import PrismaClient from the custom output path:
+   ```ts
+   import { PrismaClient } from "@/app/generated/prisma/client";
+   ```
+2. Ran:
+   ```bash
+   npx prisma generate
+   ```
+3. Restarted the development server to ensure the new client was loaded.
+
+After these steps, the error was resolved and `prisma.trip.create` worked as expected.
