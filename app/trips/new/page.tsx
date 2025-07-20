@@ -20,6 +20,9 @@ export default function NewTrips() {
           <form
             className="space-y-6"
             action={(formData: FormData) => {
+              if (imageUrl) {
+                formData.append("imageUrl", imageUrl);
+              }
               startTransition(() => {
                 createTrip(formData);
               });
@@ -90,7 +93,8 @@ export default function NewTrips() {
                   src={imageUrl}
                   alt="Trip Preview"
                   className="w-full mb-4 rounded-md max-h-48 object-cover"
-                  fill
+                  width={300}
+                  height={100}
                 />
               )}
               <UploadButton
