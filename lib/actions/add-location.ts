@@ -27,7 +27,7 @@ async function geocodeAddress(address: string) {
     }
 
     // Log the response for debugging
-    console.log("Geocoding response:", JSON.stringify(data, null, 2));
+    /*console.log("Geocoding response:", JSON.stringify(data, null, 2));
 
     if (data.status !== "OK") {
       console.error("Geocoding failed:", data.status, data.error_message);
@@ -36,7 +36,7 @@ async function geocodeAddress(address: string) {
 
     if (!data.results || data.results.length === 0) {
       throw new Error("Address not found");
-    }
+    }*/
 
     const location = data.results[0].geometry.location;
     return {
@@ -52,25 +52,25 @@ async function geocodeAddress(address: string) {
 }
 
 export async function addLocation(formData: FormData, tripId: string) {
-  const session = await auth();
-
-  if (!session) {
-    throw new Error("Not authenticated!");
-  }
-
-  const address = formData.get("address")?.toString();
-
-  if (!address) {
-    throw new Error("Address is required!");
-  }
-
-  const { latitude, longitude } = await geocodeAddress(address);
-
-  const count = await prisma.location.count({
-    where: { tripId },
-  });
-
   try {
+    const session = await auth();
+
+    if (!session) {
+      throw new Error("Not authenticated!");
+    }
+
+    const address = formData.get("address")?.toString();
+
+    if (!address) {
+      throw new Error("Address is required!");
+    }
+
+    const { latitude, longitude } = await geocodeAddress(address);
+
+    const count = await prisma.location.count({
+      where: { tripId },
+    });
+
     await prisma.location.create({
       data: {
         locationTitle: address,
@@ -82,9 +82,10 @@ export async function addLocation(formData: FormData, tripId: string) {
     });
 
     revalidatePath(`/trips/${tripId}`);
-    redirect(`/trips/${tripId}`);
   } catch (error) {
     console.error("Error creating location:", error);
-    throw new Error("Failed to create location");
+    throw error;
   }
+
+  redirect(`/trips/${tripId}`);
 }
