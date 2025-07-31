@@ -43,7 +43,7 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
         </div>
         <div>
           <Link
-            href={`trips/${trip.id}/itinerary/new`}
+            href={`/trips/${trip.id}/itinerary/new`}
             className='text-blue-600 hover:underline'
           >
             <Button>
