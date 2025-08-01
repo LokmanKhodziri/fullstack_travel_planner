@@ -2,6 +2,7 @@
 
 import { Location } from "@/app/generated/prisma";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { it } from "node:test";
 
 interface MapProps {
   itineraries: Location[];
@@ -24,6 +25,16 @@ export default function Map({ itineraries }: MapProps) {
       mapContainerStyle={{ width: "100%", height: "100%" }}
       zoom={8}
       center={center}
-    ></GoogleMap>
+    >
+      {itineraries.map((location) => (
+        <Marker
+          key={location.id}
+          position={{
+            lat: location.latitude,
+            lng: location.longitude,
+          }}
+        />
+      ))}
+    </GoogleMap>
   );
 }
