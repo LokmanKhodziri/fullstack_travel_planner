@@ -15,5 +15,15 @@ export default function Map({ itineraries }: MapProps) {
   if (loadError) return <div>Error loading map</div>;
   if (!isLoaded) return <div>Loading map...</div>;
 
-  return <GoogleMap mapContainerStyle={{ width: "100%", height: "100%" }} />;
+  const center = {
+    lat: itineraries.length > 0 ? itineraries[0].latitude : 0,
+    lng: itineraries.length > 0 ? itineraries[0].longitude : 0,
+  };
+  return (
+    <GoogleMap
+      mapContainerStyle={{ width: "100%", height: "100%" }}
+      zoom={8}
+      center={center}
+    ></GoogleMap>
+  );
 }
