@@ -26,18 +26,6 @@ async function geocodeAddress(address: string) {
       throw new Error("Invalid API key configuration");
     }
 
-    // Log the response for debugging
-    /*console.log("Geocoding response:", JSON.stringify(data, null, 2));
-
-    if (data.status !== "OK") {
-      console.error("Geocoding failed:", data.status, data.error_message);
-      throw new Error(`Geocoding failed: ${data.status}`);
-    }
-
-    if (!data.results || data.results.length === 0) {
-      throw new Error("Address not found");
-    }*/
-
     const location = data.results[0].geometry.location;
     return {
       latitude: location.lat,

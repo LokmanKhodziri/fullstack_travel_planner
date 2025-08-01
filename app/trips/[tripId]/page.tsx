@@ -23,6 +23,9 @@ export default async function TripsDetail({
       id: tripId,
       userId: session?.user?.id,
     },
+    include: {
+      locations: true,
+    },
   });
 
   if (!trip) {
