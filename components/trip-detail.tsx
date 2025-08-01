@@ -7,6 +7,7 @@ import { Calendar, MapPin, Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import { useState } from "react";
+import Map from "./map";
 
 export type TripWithLocations = Trip & {
   locations: {
@@ -110,9 +111,8 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
                   <data value=''>
                     <p>Destinations</p>
                     <p>
-                      {trip.locations
-                        .map((location) => location.locationTitle)
-                        .join(", ")}
+                      {trip.locations.length} location
+                      {trip.locations.length > 1 ? "s" : ""}
                     </p>
                   </data>
                 </div>
@@ -127,9 +127,16 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
             </div>
           </TabsContent>
           <TabsContent value='map'>
-            <div>
+            <div className='h-72 rounded-lg overflow-hidden'>
               <h2 className='text-xl font-semibold mb-4'>Map</h2>
-              <p>Map details go here...</p>
+              <Map
+                itineraries={trip.locations.map((loc, idx) => ({
+                  ...loc,
+                  order: idx,
+                  createAt: new Date(),
+                  updateAt: null,
+                }))}
+              />
             </div>
           </TabsContent>
         </Tabs>
