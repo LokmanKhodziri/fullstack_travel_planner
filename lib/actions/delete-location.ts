@@ -22,7 +22,7 @@ export async function deleteLocation(locationId: string, tripId: string) {
   }
 
   // Delete the location
-  const deletedLocation = await prisma.location.delete({
+  await prisma.location.delete({
     where: {
       id: locationId,
     },
