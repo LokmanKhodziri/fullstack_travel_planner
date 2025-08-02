@@ -122,8 +122,19 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
           </TabsContent>
           <TabsContent value='itinerary'>
             <div>
-              <h2 className='text-xl font-semibold mb-4'>Itinerary</h2>
-              <p>Itinerary details go here...</p>
+              {trip.locations.length === 0 ? (
+                <h2 className='text-gray-500'>No locations added yet.</h2>
+              ) : (
+                <ul className='space-y-4'>
+                  {trip.locations.map((location) => (
+                    <li key={location.id}>
+                      <h3 className='text-lg font-semibold'>
+                        {location.locationTitle}
+                      </h3>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </TabsContent>
           <TabsContent value='map'>

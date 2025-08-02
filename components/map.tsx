@@ -33,6 +33,7 @@ export default function Map({ itineraries }: MapProps) {
             lat: location.latitude,
             lng: location.longitude,
           }}
+          title={location.locationTitle}
         />
       ))}
     </GoogleMap>
