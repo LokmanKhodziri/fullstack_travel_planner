@@ -15,9 +15,17 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { deleteLocation } from "@/lib/actions/delete-location";
+import { Button } from "./ui/button";
 
 // Create a SortableItem component
-function SortableItem({ location }: { location: Location }) {
+function SortableItem({
+  location,
+  onDelete,
+}: {
+  location: Location;
+  onDelete: (id: string) => Promise<void>;
+}) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: location.id,
@@ -28,35 +36,54 @@ function SortableItem({ location }: { location: Location }) {
     transition,
   };
 
+  const handleDelete = async () => {
+    try {
+      const result = await deleteLocation(location.id, location.tripId);
+      if (result.success) {
+        await onDelete(location.id);
+      } else {
+        console.error("Failed to delete:", result.error);
+        // You might want to show a toast notification here
+      }
+    } catch (error) {
+      console.error("Error deleting location:", error);
+      // You might want to show a toast notification here
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
-      className='p-4 bg-white rounded-lg shadow cursor-move'
-    >
-      <h3 className='text-xl font-semibold'>{location.locationTitle}</h3>
-      <p>
-        {new Date(location.createAt).toLocaleDateString()} -{" "}
-        {location.updateAt
-          ? new Date(location.updateAt).toLocaleDateString()
-          : "Present"}
-      </p>
+      className="p-4 bg-white rounded-lg shadow flex justify-between items-center">
+      <div>
+        <h3 className="text-xl font-semibold">{location.locationTitle}</h3>
+      </div>
+      <Button
+        variant="destructive"
+        size="sm"
+        onClick={handleDelete}
+        className="ml-4">
+        Delete
+      </Button>
     </div>
   );
 }
 
 // Update main component with drag and drop functionality
-interface SortableItineraryProps {
-  locations: Location[];
-}
-
 export default function SortableItinerary({
   locations,
-}: SortableItineraryProps) {
+}: {
+  locations: Location[];
+}) {
   const [items, setItems] = useState(locations);
   const sensors = useSensors(useSensor(PointerSensor));
+
+  const handleDelete = async (deletedId: string) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== deletedId));
+  };
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -74,12 +101,15 @@ export default function SortableItinerary({
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
+      onDragEnd={handleDragEnd}>
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        <div className='space-y-4'>
+        <div className="space-y-4">
           {items.map((location) => (
-            <SortableItem key={location.id} location={location} />
+            <SortableItem
+              key={location.id}
+              location={location}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       </SortableContext>
