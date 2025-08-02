@@ -17,6 +17,7 @@ export type TripWithLocations = Trip & {
     locationTitle: string;
     latitude: number;
     longitude: number;
+    order: number;
   }[];
 };
 
@@ -171,7 +172,7 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
                   ...loc,
                   order: idx,
                   createAt: new Date(),
-                  updateAt: null,
+                  updateAt: new Date(),
                 }))}
               />
             </div>

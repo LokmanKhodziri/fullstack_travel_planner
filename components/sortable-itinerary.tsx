@@ -16,6 +16,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import { deleteLocation } from "@/lib/actions/delete-location";
+import { updateLocationOrder } from "@/lib/actions/update-location-order";
 import { Button } from "./ui/button";
 
 // Create a SortableItem component
@@ -41,9 +42,6 @@ function SortableItem({
       const result = await deleteLocation(location.id, location.tripId);
       if (result.success) {
         await onDelete(location.id);
-      } else {
-        console.error("Failed to delete:", result.error);
-        // You might want to show a toast notification here
       }
     } catch (error) {
       console.error("Error deleting location:", error);
@@ -92,7 +90,22 @@ export default function SortableItinerary({
       setItems((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
+        const newItems = arrayMove(items, oldIndex, newIndex);
+
+        // Update the database with the new order
+        const locationIds = newItems.map((item) => item.id);
+        updateLocationOrder(items[0]?.tripId || "", locationIds)
+          .then((result) => {
+            if (!result.success) {
+              console.error("Failed to update location order:", result.error);
+              // Optionally revert the local state if the server update failed
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating location order:", error);
+          });
+
+        return newItems;
       });
     }
   }
