@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import { useState } from "react";
 import Map from "./map";
+import SortableItinerary from "./sortable-itinerary";
 
 export type TripWithLocations = Trip & {
   locations: {
@@ -117,23 +118,49 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
                   </data>
                 </div>
               </div>
-              <p>{trip.description}</p>
+              <p className='text-gray-500 mt-4 leading-relaxed'>
+                {trip.description}
+              </p>
             </div>
           </TabsContent>
           <TabsContent value='itinerary'>
-            <div>
+            <div className='flex justify-between items-center mb-4'>
               {trip.locations.length === 0 ? (
-                <h2 className='text-gray-500'>No locations added yet.</h2>
+                <>
+                  <h2 className='text-gray-500'>No locations added yet.</h2>
+                  <div>
+                    <Link
+                      href={`/trips/${trip.id}/itinerary/new`}
+                      className='text-blue-600 hover:underline'
+                    >
+                      <Button>
+                        <Plus className='w-6 h-6 mr-2' />
+                        Add Location
+                      </Button>
+                    </Link>
+                  </div>
+                </>
               ) : (
-                <ul className='space-y-4'>
-                  {trip.locations.map((location) => (
-                    <li key={location.id}>
-                      <h3 className='text-lg font-semibold'>
-                        {location.locationTitle}
-                      </h3>
-                    </li>
-                  ))}
-                </ul>
+                <div className='flex items-center space-x-4'>
+                  <h2 className='text-xl font-semibold'>Full Itinerary</h2>
+                  <SortableItinerary
+                    locations={trip.locations.map((loc) => ({
+                      id: loc.id,
+                      locationTitle: loc.locationTitle,
+                      startDate: trip.startDate,
+                      endDate: trip.endDate,
+                    }))}
+                  />
+                  <Link
+                    href={`/trips/${trip.id}/itinerary/new`}
+                    className='text-blue-600 hover:underline'
+                  >
+                    <Button>
+                      <Plus className='w-6 h-6 mr-2' />
+                      Add Location
+                    </Button>
+                  </Link>
+                </div>
               )}
             </div>
           </TabsContent>

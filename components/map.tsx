@@ -2,7 +2,6 @@
 
 import { Location } from "@/app/generated/prisma";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { it } from "node:test";
 
 interface MapProps {
   itineraries: Location[];
