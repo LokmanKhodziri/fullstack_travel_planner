@@ -29,26 +29,26 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className='container mx-auto px-4 py-8 space-y-8'>
       {trip.imageUrl && (
-        <div className="w-full h-72 md:h-96 overflow-hidden rounded-xl shadow-lg relative">
+        <div className='w-full h-72 md:h-96 overflow-hidden rounded-xl shadow-lg relative'>
           <Image
             src={trip.imageUrl}
             alt={trip.title}
-            className="object-cover"
+            className='object-cover'
             fill
             priority
           />
         </div>
       )}
-      <div className="bg-white p-6 shadow rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center">
+      <div className='bg-white p-6 shadow rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center'>
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-800 mb-2">
+          <h1 className='text-3xl font-extrabold text-gray-800 mb-2'>
             {trip.title}
           </h1>
-          <div className="flex items-center text-gray-600 mb-6">
-            <Calendar className="w-6 h-6 mr-2" />
-            <span className="text-lg">
+          <div className='flex items-center text-gray-600 mb-6'>
+            <Calendar className='w-6 h-6 mr-2' />
+            <span className='text-lg'>
               {new Date(trip.startDate).toLocaleDateString()} -{" "}
               {new Date(trip.endDate).toLocaleDateString()}
             </span>
@@ -57,42 +57,45 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
         <div>
           <Link
             href={`/trips/${trip.id}/itinerary/new`}
-            className="text-blue-600 hover:underline">
+            className='text-blue-600 hover:underline'
+          >
             <Button>
-              <Plus className="w-6 h-6 mr-2" />
+              <Plus className='w-6 h-6 mr-2' />
               Add Location
             </Button>
           </Link>
         </div>
       </div>
 
-      <div className="bg-white p-6 shadow rounded-lg">
+      <div className='bg-white p-6 shadow rounded-lg'>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-6">
+          <TabsList className='mb-6'>
             <TabsTrigger
-              value="overview"
-              className="text-lg font-semibold w-full">
+              value='overview'
+              className='text-lg font-semibold w-full'
+            >
               Overview
             </TabsTrigger>
             <TabsTrigger
-              value="itinerary"
-              className="text-lg font-semibold w-full">
+              value='itinerary'
+              className='text-lg font-semibold w-full'
+            >
               Itinerary
             </TabsTrigger>
-            <TabsTrigger value="map" className="text-lg font-semibold w-full">
+            <TabsTrigger value='map' className='text-lg font-semibold w-full'>
               Map
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview">
+          <TabsContent value='overview'>
             <div>
-              <h2 className="text-xl font-semibold mb-4">Overview</h2>
+              <h2 className='text-xl font-semibold mb-4'>Overview</h2>
               <div>
-                <div className="flex items-start">
-                  <Calendar className="h-6 w-6 mr-3 text-gray-500" />
-                  <div className="text-gray-700">
-                    <p className="font-medium text-gray-700">Dates</p>
-                    <p className="text-sm text-gray-500">
+                <div className='flex items-start'>
+                  <Calendar className='h-6 w-6 mr-3 text-gray-500' />
+                  <div className='text-gray-700'>
+                    <p className='font-medium text-gray-700'>Dates</p>
+                    <p className='text-sm text-gray-500'>
                       {new Date(trip.startDate).toLocaleDateString()} -{" "}
                       {new Date(trip.endDate).toLocaleDateString()}
                       <br />
@@ -105,9 +108,9 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start mt-4">
-                  <MapPin className="h-6 w-6 mr-3 text-gray-500" />
-                  <data value="">
+                <div className='flex items-start mt-4'>
+                  <MapPin className='h-6 w-6 mr-3 text-gray-500' />
+                  <data value=''>
                     <p>Destinations</p>
                     <p>
                       {trip.locations.length} location
@@ -116,57 +119,64 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
                   </data>
                 </div>
               </div>
-              <p className="text-gray-500 mt-4 leading-relaxed">
+              <p className='text-gray-500 mt-4 leading-relaxed'>
                 {trip.description}
               </p>
             </div>
           </TabsContent>
-          <TabsContent value="itinerary">
-            <div className="flex justify-between items-center mb-4">
+          <TabsContent value='itinerary'>
+            <div className='space-y-6'>
               {trip.locations.length === 0 ? (
+                <div className='flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg'>
+                  <h2 className='text-xl text-gray-500 mb-4'>
+                    No locations added yet.
+                  </h2>
+                  <Link
+                    href={`/trips/${trip.id}/itinerary/new`}
+                    className='text-blue-600 hover:underline'
+                  >
+                    <Button>
+                      <Plus className='w-5 h-5 mr-2' />
+                      Add Your First Location
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
                 <>
-                  <h2 className="text-gray-500">No locations added yet.</h2>
-                  <div>
+                  <div className='flex justify-between items-center'>
+                    <h2 className='text-xl font-semibold'>Full Itinerary</h2>
                     <Link
                       href={`/trips/${trip.id}/itinerary/new`}
-                      className="text-blue-600 hover:underline">
-                      <Button>
-                        <Plus className="w-6 h-6 mr-2" />
+                      className='text-blue-600 hover:underline'
+                    >
+                      <Button size='sm'>
+                        <Plus className='w-4 h-4 mr-2' />
                         Add Location
                       </Button>
                     </Link>
                   </div>
+
+                  <div className='mt-4'>
+                    <SortableItinerary
+                      locations={trip.locations.map((loc) => ({
+                        id: loc.id,
+                        locationTitle: loc.locationTitle,
+                        tripId: trip.id,
+                        latitude: loc.latitude,
+                        longitude: loc.longitude,
+                        order: loc.order,
+                        createAt: new Date(),
+                        updateAt: null,
+                      }))}
+                    />
+                  </div>
                 </>
-              ) : (
-                <div className="flex items-center space-x-4">
-                  <h2 className="text-xl font-semibold">Full Itinerary</h2>
-                  <SortableItinerary
-                    locations={trip.locations.map((loc) => ({
-                      id: loc.id,
-                      locationTitle: loc.locationTitle,
-                      tripId: trip.id,
-                      latitude: loc.latitude,
-                      longitude: loc.longitude,
-                      order: loc.order,
-                      createAt: new Date(),
-                      updateAt: null,
-                    }))}
-                  />
-                  <Link
-                    href={`/trips/${trip.id}/itinerary/new`}
-                    className="text-blue-600 hover:underline">
-                    <Button>
-                      <Plus className="w-6 h-6 mr-2" />
-                      Add Location
-                    </Button>
-                  </Link>
-                </div>
               )}
             </div>
           </TabsContent>
-          <TabsContent value="map">
-            <div className="h-72 rounded-lg overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4">Map</h2>
+          <TabsContent value='map'>
+            <div className='h-72 rounded-lg overflow-hidden'>
+              <h2 className='text-xl font-semibold mb-4'>Map</h2>
               <Map
                 itineraries={trip.locations.map((loc, idx) => ({
                   ...loc,
