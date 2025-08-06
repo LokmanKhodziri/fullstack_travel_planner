@@ -189,6 +189,12 @@ export default function TripDetailClient({ trip }: TripDetailClientProps) {
           </TabsContent>
         </Tabs>
       </div>
+
+      <div className='text-center text-gray-500 text-sm mt-8'>
+        <Link href={`/trips/`} className='text-blue-600 hover:underline'>
+          <Button>Back to Trip Overview</Button>
+        </Link>
+      </div>
     </div>
   );
 }
