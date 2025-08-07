@@ -7,37 +7,69 @@ export default function GlobePage() {
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
 
   return (
-    <div className='flex flex-col items-center min-h-screen justify-center bg-gradient-to-b from-white to-gray-50 p-6'>
-      <div className='mx-auto max-w-4xl p-8'>
-        <div className='max-w-2xl mx-auto text-center'>
-          <h1 className='text-4xl font-bold mb-12'>Globe Page</h1>
-          <div className='grid-cols-1 lg:grid-cols-3 gap-8 items-start justify-center'>
-            <div className='lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden'>
-              <div className='p-6'>
-                <h2 className='text-2xl font-bold mb-4'>Explore the Globe</h2>
-                <p className='text-lg text-gray-700'>
-                  Discover new places and plan your next adventure.
-                </p>
-                <div className='h-[600px] w-full relative'>
-                  <Globe
-                    ref={globeRef}
-                    globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-                    bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-                    backgroundColor='rgba(0, 0, 0, 0)'
-                    pointColor={() => "#ff5733"}
-                    pointLabel='name'
-                    pointRadius={0.5}
-                    pointAltitude={0.1}
-                    pointsMerge={true}
-                    width={800}
-                    height={600}
-                  />
+    <main className='min-h-screen bg-gradient-to-b from-white to-gray-50'>
+      <div className='container mx-auto px-6 py-12'>
+        <header className='text-center mb-16'>
+          <h1 className='text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent'>
+            Interactive World Globe
+          </h1>
+          <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
+            Explore and discover destinations across the globe
+          </p>
+        </header>
+
+        <div className='grid lg:grid-cols-12 gap-8'>
+          {/* Globe Container */}
+          <div className='lg:col-span-8 bg-white rounded-2xl shadow-xl p-8 border border-gray-100'>
+            <div className='aspect-square relative'>
+              <Globe
+                ref={globeRef}
+                globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
+                backgroundColor='rgba(255,255,255,0)'
+                showAtmosphere={true}
+                atmosphereColor='#4299e1'
+                atmosphereAltitude={0.15}
+                width={800}
+                height={800}
+              />
+            </div>
+          </div>
+
+          {/* Stats Panel */}
+          <div className='lg:col-span-4 space-y-6'>
+            <div className='bg-white rounded-xl p-6 shadow-lg border border-gray-100'>
+              <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
+                Statistics
+              </h2>
+              <div className='space-y-4'>
+                <div className='flex justify-between items-center'>
+                  <span className='text-gray-600'>Total Destinations</span>
+                  <span className='text-blue-600 font-semibold'>0</span>
                 </div>
+                <div className='flex justify-between items-center'>
+                  <span className='text-gray-600'>Countries Visited</span>
+                  <span className='text-blue-600 font-semibold'>0</span>
+                </div>
+              </div>
+            </div>
+
+            <div className='bg-white rounded-xl p-6 shadow-lg border border-gray-100'>
+              <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
+                Recent Places
+              </h2>
+              <div className='space-y-3'>
+                <p className='text-gray-600'>
+                  Interact with the globe to explore destinations
+                </p>
+                <ul className='space-y-2 text-gray-600'>
+                  {/* Add your recent places list here */}
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
