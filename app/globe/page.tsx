@@ -60,30 +60,34 @@ export default function GlobePage() {
           </p>
         </header>
 
-        <div className='grid lg:grid-cols-12 gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 items-start'>
           {/* Globe Container */}
-          <div className='lg:col-span-8 bg-white rounded-2xl shadow-xl p-8 border border-gray-100'>
+          <div className='lg:col-span-2 bg-white rounded-2xl shadow-xl p-8 border overflow-hidden'>
             {isLoading ? (
               <div className='flex items-center justify-center h-full min-h-[600px]'>
                 <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900'></div>
               </div>
             ) : (
-              <Globe
-                ref={globeRef}
-                globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-                backgroundColor='rgba(255,255,255,0)'
-                showAtmosphere={true}
-                atmosphereColor='#4299e1'
-                atmosphereAltitude={0.15}
-                width={600}
-                height={600}
-              />
+              <div className='space-y-4'>
+                <div className='bg-blue-50 p-4 rounded-lg'>
+                  <Globe
+                    ref={globeRef}
+                    globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+                    bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
+                    backgroundColor='rgba(255,255,255,0)'
+                    showAtmosphere={true}
+                    atmosphereColor='#4299e1'
+                    atmosphereAltitude={0.15}
+                    width={900}
+                    height={600}
+                  />
+                </div>
+              </div>
             )}
           </div>
 
           {/* Stats Panel */}
-          <div className='lg:col-span-4 space-y-6'>
+          <div className='lg:col-span-1 space-y-6'>
             <div className='bg-white rounded-xl p-6 shadow-lg border border-gray-100'>
               <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
                 Statistics
