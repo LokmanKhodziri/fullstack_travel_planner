@@ -48,6 +48,29 @@ export default function GlobePage() {
     }
   }, [isLoading]);
 
+  const renderVisitedCountries = () => {
+    if (visitedCountries.size === 0) {
+      return (
+        <p className='text-gray-600'>You haven't visited any countries yet.</p>
+      );
+    }
+
+    return (
+      <ul className='space-y-2 text-gray-600 max-h-60 overflow-y-auto pr-2'>
+        {Array.from(visitedCountries)
+          .sort()
+          .map((country) => (
+            <li
+              key={country}
+              className='bg-gray-50 p-2 rounded-md hover:bg-gray-100 transition-colors'
+            >
+              {country}
+            </li>
+          ))}
+      </ul>
+    );
+  };
+
   return (
     <main className='min-h-screen bg-gradient-to-b from-white to-gray-50'>
       <div className='container mx-auto px-6 py-12'>
@@ -68,21 +91,17 @@ export default function GlobePage() {
                 <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900'></div>
               </div>
             ) : (
-              <div className='space-y-4'>
-                <div className='bg-blue-50 p-4 rounded-lg'>
-                  <Globe
-                    ref={globeRef}
-                    globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-                    bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-                    backgroundColor='rgba(255,255,255,0)'
-                    showAtmosphere={true}
-                    atmosphereColor='#4299e1'
-                    atmosphereAltitude={0.15}
-                    width={900}
-                    height={600}
-                  />
-                </div>
-              </div>
+              <Globe
+                ref={globeRef}
+                globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
+                backgroundColor='rgba(255,255,255,0)'
+                showAtmosphere={true}
+                atmosphereColor='#4299e1'
+                atmosphereAltitude={0.15}
+                width={900}
+                height={600}
+              />
             )}
           </div>
 
@@ -110,16 +129,9 @@ export default function GlobePage() {
 
             <div className='bg-white rounded-xl p-6 shadow-lg border border-gray-100'>
               <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
-                Recent Places
+                Visited Countries
               </h2>
-              <div className='space-y-3'>
-                <p className='text-gray-600'>
-                  Interact with the globe to explore destinations
-                </p>
-                <ul className='space-y-2 text-gray-600'>
-                  {/* Add your recent places list here */}
-                </ul>
-              </div>
+              <div className='space-y-3'>{renderVisitedCountries()}</div>
             </div>
           </div>
         </div>
