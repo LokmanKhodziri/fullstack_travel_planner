@@ -1,40 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 Fullstack Travel Planner
 
-## Getting Started
+A modern, full-stack travel planning application built with Next.js 15, TypeScript, and Prisma.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **🔐 Authentication**: Secure user authentication with NextAuth.js
+- **🗺️ Interactive Maps**: Google Maps integration for location visualization
+- **🌐 3D Globe**: Interactive globe view using react-globe.gl
+- **📝 Trip Management**: Create, edit, and organize travel plans
+- **📍 Location Management**: Add and manage trip destinations
+- **🔄 Drag & Drop**: Sortable itineraries with drag-and-drop functionality
+- **📱 Responsive Design**: Mobile-friendly interface with Tailwind CSS
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL database
+- Google Maps API key
+
+### Installation
+
+1. **Clone and install dependencies**
+
+   ```bash
+   git clone <your-repo-url>
+   cd fullstack_travel_planner
+   npm install
+   ```
+
+2. **Set up environment variables**
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Configure in `.env.local`:
+
+   ```env
+   DATABASE_URL="postgresql://username:password@localhost:5432/travel_planner"
+   NEXTAUTH_SECRET="your-secret-key"
+   NEXTAUTH_URL="http://localhost:3000"
+   GOOGLE_MAPS_API_KEY="your-google-maps-api-key"
+   ```
+
+3. **Set up database**
+
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+## 🏗️ Project Structure
+
+```
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── trips/             # Trip pages
+│   └── globe/             # 3D globe view
+├── components/            # React components
+│   ├── ui/               # UI components
+│   ├── trip-detail.tsx   # Trip detail view
+│   └── sortable-itinerary.tsx # Drag & drop
+├── lib/                  # Utilities
+│   ├── actions/          # Server actions
+│   └── prisma.ts         # Database client
+└── prisma/               # Database schema
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🗄️ Database Schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **User**: Authentication and user management
+- **Trip**: Travel plans with metadata
+- **Location**: Destinations within trips
+- **Account/Session**: NextAuth.js authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 API Endpoints
 
-## Learn More
+### Server Actions
 
-To learn more about Next.js, take a look at the following resources:
+- `createTrip()` - Create new trip
+- `addLocation()` - Add location to trip
+- `deleteLocation()` - Remove location
+- `updateLocationOrder()` - Reorder locations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vercel (Recommended)
 
-## Deploy on Vercel
+1. Push to GitHub
+2. Connect to Vercel
+3. Configure environment variables
+4. Deploy automatically
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run start    # Production server
+npm run lint     # Run ESLint
+```
 
-## Problem Solving & Troubleshooting
+## 📝 License
 
-See [problem.md](./problem.md) for common issues and solutions encountered during development.
+MIT License
+
+---
+
+Built with ❤️ using Next.js, TypeScript, and Prisma
