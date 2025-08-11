@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Globe, { GlobeMethods } from "react-globe.gl";
+import VisitedCountriesList from "@/components/visited-countries-list";
 import { TransformedLocation } from "../api/trips/route";
 
 export default function GlobePage() {
@@ -47,29 +48,6 @@ export default function GlobePage() {
       globeRef.current.controls().autoRotateSpeed = 0.5;
     }
   }, [isLoading]);
-
-  const renderVisitedCountries = () => {
-    if (visitedCountries.size === 0) {
-      return (
-        <p className='text-gray-600'>You haven't visited any countries yet.</p>
-      );
-    }
-
-    return (
-      <ul className='space-y-2 text-gray-600 max-h-60 overflow-y-auto pr-2'>
-        {Array.from(visitedCountries)
-          .sort()
-          .map((country) => (
-            <li
-              key={country}
-              className='bg-gray-50 p-2 rounded-md hover:bg-gray-100 transition-colors'
-            >
-              {country}
-            </li>
-          ))}
-      </ul>
-    );
-  };
 
   return (
     <main className='min-h-screen bg-gradient-to-b from-white to-gray-50'>
@@ -131,7 +109,9 @@ export default function GlobePage() {
               <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
                 Visited Countries
               </h2>
-              <div className='space-y-3'>{renderVisitedCountries()}</div>
+              <div className='space-y-3'>
+                <VisitedCountriesList countries={visitedCountries} />
+              </div>
             </div>
           </div>
         </div>
