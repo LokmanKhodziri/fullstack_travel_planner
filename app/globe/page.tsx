@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Globe, { GlobeMethods } from "react-globe.gl";
+import type { GlobeMethods } from "react-globe.gl";
 import VisitedCountriesList from "@/components/visited-countries-list";
 import { TransformedLocation } from "../api/trips/route";
+import dynamic from "next/dynamic";
+
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
 export default function GlobePage() {
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
