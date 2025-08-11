@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { GlobeMethods } from "react-globe.gl";
 import VisitedCountriesList from "@/components/visited-countries-list";
 import { TransformedLocation } from "../api/trips/route";
@@ -10,11 +10,31 @@ const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
 export default function GlobePage() {
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
+  const globeContainerRef = useRef<HTMLDivElement>(null);
+  const [globeSize, setGlobeSize] = useState({ width: 0, height: 0 });
   const [locations, setLocations] = useState<TransformedLocation[]>([]);
   const [visitedCountries, setVisitedCountries] = useState<Set<string>>(
     new Set()
   );
   const [isLoading, setLoading] = useState(true);
+
+  const updateGlobeSize = useCallback(() => {
+    if (globeContainerRef.current) {
+      const { width, height } =
+        globeContainerRef.current.getBoundingClientRect();
+      setGlobeSize({ width, height });
+    }
+  }, []);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => updateGlobeSize());
+    const currentRef = globeContainerRef.current;
+    if (currentRef) {
+      resizeObserver.observe(currentRef);
+      updateGlobeSize(); // Set initial size
+    }
+    return () => currentRef && resizeObserver.unobserve(currentRef);
+  }, [updateGlobeSize]);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -66,9 +86,14 @@ export default function GlobePage() {
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 items-start'>
           {/* Globe Container */}
-          <div className='lg:col-span-2 bg-white rounded-2xl shadow-xl p-8 border overflow-hidden'>
+          <div
+            ref={globeContainerRef}
+            className='lg:col-span-2 bg-white rounded-2xl shadow-xl border overflow-hidden 
+             w-full 
+             h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]'
+          >
             {isLoading ? (
-              <div className='flex items-center justify-center h-full min-h-[600px]'>
+              <div className='flex items-center justify-center h-full'>
                 <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900'></div>
               </div>
             ) : (
@@ -80,8 +105,8 @@ export default function GlobePage() {
                 showAtmosphere={true}
                 atmosphereColor='#4299e1'
                 atmosphereAltitude={0.15}
-                width={900}
-                height={600}
+                width={globeSize.width}
+                height={globeSize.height}
                 pointLabel='name'
                 pointLat='latitude'
                 pointLng='longitude'
