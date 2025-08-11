@@ -115,7 +115,7 @@ export default function GlobePage() {
 
             <div className='bg-white rounded-xl p-6 shadow-lg border border-gray-100'>
               <h2 className='text-2xl font-semibold mb-4 text-gray-800'>
-                Visited Countries
+                Last 5 Visited Countries
               </h2>
               <div className='space-y-3'>
                 <VisitedCountriesList countries={visitedCountries} />
