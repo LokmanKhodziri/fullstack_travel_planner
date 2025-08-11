@@ -79,6 +79,14 @@ export default function GlobePage() {
                 atmosphereAltitude={0.15}
                 width={900}
                 height={600}
+                pointLabel='name'
+                pointLat='latitude'
+                pointLng='longitude'
+                pointsData={locations}
+                pointRadius={0.7}
+                pointsMerge={true}
+                pointAltitude={0.1}
+                pointColor={() => "#4299e1"}
               />
             )}
           </div>
