@@ -31,7 +31,7 @@ export default function GlobePage() {
     const currentRef = globeContainerRef.current;
     if (currentRef) {
       resizeObserver.observe(currentRef);
-      updateGlobeSize(); // Set initial size
+      updateGlobeSize();
     }
     return () => currentRef && resizeObserver.unobserve(currentRef);
   }, [updateGlobeSize]);
