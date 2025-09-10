@@ -2,7 +2,6 @@ import React from "react";
 import { Map as MapIcon } from "lucide-react";
 import { auth } from "@/auth";
 import Link from "next/link";
-import LoginForm from "@/components/login-form";
 
 export default async function LandingPage() {
   const session = await auth();
@@ -22,13 +21,18 @@ export default async function LandingPage() {
         <div className='flex flex-col sm:flex-row gap-4 justify-center mt-12'>
           {isLoggedIn ? (
             <Link
-              href="/trips"
+              href='/trips'
               className='w-full sm:w-auto bg-black text-white hover:bg-gray-800 px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center'
             >
               Check it Out
             </Link>
           ) : (
-            <LoginForm />
+            <Link
+              href='/login'
+              className='w-full sm:w-auto bg-green-600 text-white hover:bg-green-700 px-6 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center'
+            >
+              Sign Up Now
+            </Link>
           )}
         </div>
       </div>

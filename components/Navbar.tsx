@@ -4,8 +4,14 @@ import { loginWithGoogle, loginWithGitHub, logout } from "@/lib/auth-actions";
 import { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navbar({ session }: { session: Session | null }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <nav className='bg-white shadow-md py-4 border-b border-gray-200'>
       <div className='container mx-auto flex justify-between itmes-center px-6 lg:px-8'>
@@ -16,7 +22,7 @@ export default function Navbar({ session }: { session: Session | null }) {
           </span>
         </Link>
         <div className='flex items-center space-x-4'>
-          {session ? (
+          {isClient && session ? (
             <>
               <Link
                 href={"/trips"}
@@ -37,22 +43,16 @@ export default function Navbar({ session }: { session: Session | null }) {
                 Sign Out
               </button>
             </>
-          ) : (
+          ) : isClient ? (
             <>
-              <button
-                className='flex items-center justify-center text-white bg-red-600 hover:bg-red-700 p-2 rounded-sm cursor-pointer'
-                onClick={() => loginWithGoogle()}
+              <Link
+                href={"/login"}
+                className='flex items-center justify-center text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-sm cursor-pointer'
               >
-                Sign In with Google
-              </button>
-              <button
-                className='flex items-center justify-center text-white bg-gray-800 hover:bg-gray-900 p-2 rounded-sm cursor-pointer'
-                onClick={() => loginWithGitHub()}
-              >
-                Sign In with GitHub
-              </button>
+                Sign In
+              </Link>
             </>
-          )}
+          ) : null}
         </div>
       </div>
     </nav>

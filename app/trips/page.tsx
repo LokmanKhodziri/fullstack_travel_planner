@@ -92,11 +92,9 @@ export default async function TripsPage() {
                     <p>
                       End Date: {new Date(trip.endDate).toLocaleDateString()}
                     </p>
-                    <Link href={`/trips/${trip.id}`}>
-                      <Button variant="outline" className="mt-2">
+                    <Button variant="outline" className="mt-2">
                         View Trip
                       </Button>
-                    </Link>
                   </CardContent>
                 </Card>
               </Link>
