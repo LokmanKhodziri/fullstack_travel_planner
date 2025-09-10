@@ -33,7 +33,11 @@ export default function GlobePage() {
       resizeObserver.observe(currentRef);
       updateGlobeSize();
     }
-    return () => currentRef && resizeObserver.unobserve(currentRef);
+    return () => {
+      if (currentRef) {
+        resizeObserver.unobserve(currentRef);
+      }
+    };
   }, [updateGlobeSize]);
 
   useEffect(() => {
