@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { login } from "@/lib/auth-actions";
 
 interface AuthButtonProps {
   isLoggedIn: boolean;
@@ -16,11 +15,11 @@ export default function AuthButton({
 }: AuthButtonProps) {
   const router = useRouter();
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (isLoggedIn) {
       router.push("/trips");
     } else {
-      await login();
+      router.push("/login");
     }
   };
   return (

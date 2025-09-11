@@ -9,7 +9,7 @@ export default function VisitedCountriesList({
 }: VisitedCountriesListProps) {
   if (countries.size === 0) {
     return (
-      <p className='text-gray-600'>You haven't visited any countries yet.</p>
+      <p className='text-gray-600'>You haven&apos;t visited any countries yet.</p>
     );
   }
 

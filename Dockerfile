@@ -17,6 +17,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy the rest of the application code
 COPY . .
 
+# Generate Prisma Client
+RUN npx prisma generate
+
 # Run the build script
 RUN npm run build
 
@@ -27,6 +30,10 @@ WORKDIR /app
 # Set environment variables
 ENV NODE_ENV=production
 
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
 # Copy the built application from the builder stage
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
@@ -34,6 +41,11 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.ts ./next.config.ts
 
+# Change ownership of the files to the non-root user
+RUN chown -R nextjs:nodejs /app
+
+# Switch to the non-root user
+USER nextjs
 
 # Expose the port the app runs on
 EXPOSE 3000

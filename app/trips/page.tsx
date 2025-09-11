@@ -78,7 +78,7 @@ export default async function TripsPage() {
             <CardContent>
               <h3 className="text-xl font-medium mb-2">No trips yet!</h3>
               <p className="text-gray-500 mb-6 max-w-sm">
-                It looks like you haven't planned any trips. Click the button
+                It looks like you haven&apos;t planned any trips. Click the button
                 below to create your first one.
               </p>
               <Link href={"/trips/new"}>

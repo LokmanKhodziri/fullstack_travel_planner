@@ -20,7 +20,6 @@ export default function NewLocationClient({ tripId }: { tripId: string }) {
               startTransition(() => {
                 addLocation(formData, tripId);
               });
-              return null;
             }}
           >
             <div>

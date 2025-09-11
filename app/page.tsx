@@ -15,7 +15,7 @@ export default async function LandingPage() {
         </h1>
         <p className='mt-4 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto'>
           Track your travels and bring your adventures to life with an
-          interactive 3D globe. See where you've been and discover where to go
+          interactive 3D globe. See where you&apos;ve been and discover where to go
           next.
         </p>
         <div className='flex flex-col sm:flex-row gap-4 justify-center mt-12'>
